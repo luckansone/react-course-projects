@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, Fragment} from 'react';
 import AddUser from './components/AddUser/AddUser';
 import ErrorModal from './components/ErrorModal/ErrorModal';
 import UsersList from './components/UsersList/UsersList';
@@ -22,12 +22,12 @@ function App() {
   };
 
   return (
-    <div>
+    <Fragment>
       <AddUser addNewUser={addNewUser} showErrorModal={showErrorModal}></AddUser>
       {errorMessage &&
        <ErrorModal hideErrorModal= {hideErrorModal}>{errorMessage}</ErrorModal>}
        <UsersList users={users}></UsersList>
-    </div>
+    </Fragment>
   );
 }
 
