@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import './App.css';
 import AddUser from './components/AddUser/AddUser';
 import ErrorModal from './components/ErrorModal/ErrorModal';
 import UsersList from './components/UsersList/UsersList';
@@ -9,11 +8,8 @@ function App() {
   const [errorMessage, setErrorMessage] = useState(null);
 
   const addNewUser = (user) => {
-    setUser(prev=> {
-      return {
-        ...prev,
-        user
-      }
+    setUser(prevUsers => {
+      return [user, ...prevUsers]
     });
   };
 
