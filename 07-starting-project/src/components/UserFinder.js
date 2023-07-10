@@ -2,20 +2,28 @@ import { Fragment, Component } from "react";
 import UserContext from "../store/user-context";
 import Users from "./Users";
 import classes from "./UserFinder.module.css";
+import ErrorBoundary from "./ErrorBoundary";
+
+const DUMMY_USERS = [
+    { id: 'u1', name: 'Max' },
+    { id: 'u2', name: 'Manuel' },
+    { id: 'u3', name: 'Julie' },
+  ];
 
 class UserFinder extends Component {
   static contextType = UserContext;
   constructor() {
     super();
     this.state = {
-      filteredUsers: this.context.users,
+      filteredUsers: DUMMY_USERS, //this.context.users,
+      // react issue with context in class based components - https://github.com/facebook/react/issues/13969#issuecomment-433253469
       searchTerm: "",
     };
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchTerm !== this.state.searchTerm) {
       this.setState({
-        filteredUsers: this.context.users.filter((user) =>
+        filteredUsers: /*this.context.users*/ DUMMY_USERS.filter((user) =>
           user.name.includes(this.state.searchTerm)
         ),
       });
@@ -32,7 +40,9 @@ class UserFinder extends Component {
         <div className={classes.finder}>
           <input type="search" onChange={this.searchChangeHandler.bind(this)} />
         </div>
-        <Users users={this.state.filteredUsers} />
+        <ErrorBoundary>
+            <Users users={this.state.filteredUsers} />
+        </ErrorBoundary>
       </Fragment>
     );
   }
